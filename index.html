@@ -168,7 +168,6 @@
     // DOM Elements
     const modelsGrid = document.getElementById('modelsGrid');
     const loadingState = document.getElementById('loadingState');
-    const categoryButtons = document.querySelectorAll('.category-btn');
     const searchInput = document.getElementById('searchInput');
     let modelsData = [];
     let currentCategory = 'all';
@@ -254,17 +253,6 @@
         displayModels(filtered);
     }
     // Event listeners
-    categoryButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            categoryButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentCategory = btn.dataset.category;
-            filterModels();
-        });
-    });
-    searchInput.addEventListener('input', (e) => {
-        currentSearch = e.target.value;
-        filterModels();
     });
     // Initialize
     const categories = [
