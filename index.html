@@ -248,6 +248,10 @@
         categories.forEach(cat => {
             const card = document.createElement('div');
             card.className = `cursor-pointer rounded-xl p-6 flex flex-col items-center justify-center bg-gradient-to-br ${cat.colorFrom} ${cat.colorTo} hover:scale-105 transform transition-all duration-300 shadow-lg`;
+            // Center the last card
+            if (index === categories.length - 1) {
+                card.classList.add('col-start-2');
+            }
             card.innerHTML = `
                 <i data-feather="${cat.icon}" class="w-8 h-8 mb-2"></i>
                 <span class="text-white font-semibold text-center">${cat.name}</span>
