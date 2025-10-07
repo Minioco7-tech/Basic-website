@@ -254,9 +254,10 @@
             }
             card.innerHTML = `
                 <div class="w-full h-32 bg-cover bg-center" style="background-image: url('${cat.image}');"></div>
-                <div class="p-4 flex flex-col items-center justify-center bg-gradient-to-br ${cat.colorFrom} ${cat.colorTo}">    
-                    <i data-feather="${cat.icon}" class="w-8 h-8 mb-2"></i>
-                    <span class="text-white font-semibold text-center">${cat.name}</span>
+                    <div class="p-4 flex flex-col items-center justify-center bg-gradient-to-br ${cat.colorFrom} ${cat.colorTo}">    
+                        <i data-feather="${cat.icon}" class="w-8 h-8 mb-2"></i>
+                        <span class="text-white font-semibold text-center">${cat.name}</span>
+                    </div>
                 </div>
             `;
             card.addEventListener('click', () => {
