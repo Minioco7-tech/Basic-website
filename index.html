@@ -166,11 +166,11 @@
         loadingState.classList.add('hidden');
     } catch (err) {
         console.error('❌ Failed to load models.json:', err);
-        loadingState.innerHTML = `
+        loadingState.innerHTML = 
             <p class="text-red-400 text-lg mt-6">
                 Failed to load AI tools. Please refresh or try again later.
             </p>
-        `;
+        ;
     }
     // Return n random models
     function getRandomModels(models, n) {
@@ -183,7 +183,7 @@
         models.forEach(model => {
             const tile = document.createElement('div');
             tile.className = 'model-tile group cursor-pointer bg-black bg-opacity-20 rounded-xl overflow-hidden border border-white border-opacity-10 hover:border-opacity-30 transition-all duration-300';
-            tile.innerHTML = `
+            tile.innerHTML = 
                 <div class="aspect-w-16 aspect-h-9 bg-gradient-to-br from-purple-500 to-pink-500 relative">
                     <div class="w-full h-32 bg-cover bg-center" style="background-image: url('${model.image}')"></div>
                     <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
@@ -199,7 +199,7 @@
                         <span class="text-xs px-2 py-1 bg-purple-500 bg-opacity-20 text-purple-300 rounded-full">${getCategoryName(model.category)}</span>
                     </div>
                 </div>
-            `;
+            ;
             // Redirect to model page on click
             tile.addEventListener('click', () => {
                 window.location.href = `model.html?id=${encodeURIComponent(model.id)}`;
@@ -253,10 +253,10 @@
     categories.forEach(cat => {
         const card = document.createElement('div');
         card.className = `cursor-pointer rounded-xl p-6 flex flex-col items-center justify-center bg-gradient-to-br ${cat.colorFrom} ${cat.colorTo} hover:scale-105 transform transition-all duration-300 shadow-lg`;
-        card.innerHTML = `
+        card.innerHTML = 
             <i data-feather="${cat.icon}" class="w-8 h-8 mb-2"></i>
             <span class="text-white font-semibold text-center">${cat.name}</span>
-    `    ;
+        ;
         card.addEventListener('click', () => {
             window.location.href = `category.html?category=${encodeURIComponent(cat.key)}`;
         });
