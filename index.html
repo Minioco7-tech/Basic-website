@@ -247,13 +247,13 @@
         // Create category cards
         categories.forEach((cat, index) => {
             const card = document.createElement('div');
-            card.className = `cursor-pointer rounded-xl p-6 flex flex-col items-center justify-center bg-gradient-to-br ${cat.colorFrom} ${cat.colorTo} hover:scale-105 transform transition-all duration-300 shadow-lg`;
+            card.className = `cursor-pointer rounded-xl p-6 flex flex-col items-center justify-center ${cat.colorFrom} ${cat.colorTo} hover:scale-105 transform transition-all duration-300 shadow-lg`;
             // Center the last card
             if (index === categories.length - 1) {
                 card.classList.add('col-start-2');
             }
             card.innerHTML = `
-                <div class="w-full h-32 bg-cover bg-center" style="background-image: url('${cat.image}');">
+                <div class="w-full h-32 bg-cover bg-center relative" style="background-image: url('${cat.image}');">
                     <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center p-4">   
                         <i data-feather="${cat.icon}" class="w-8 h-8 mb-2"></i>
                         <span class="text-white font-semibold text-center">${cat.name}</span>
