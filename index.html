@@ -191,10 +191,22 @@
     let currentSearch = '';
     // Fetch models from JSON
     async function fetchModels() {
-        const response = await fetch('models.json', { cache: 'no-store' });
+    try {
+        const response = await fetch('./models.json');
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
         modelsData = await response.json();
         displayModels(getRandomModels(modelsData, 12)); // show 12 random models on load
         loadingState.classList.add('hidden');
+    } catch (err) {
+        console.error('❌ Failed to load models.json:', err);
+        loadingState.innerHTML = `
+            <p class="text-red-400 text-lg mt-6">
+                Failed to load AI tools. Please refresh or try again later.
+            </p>
+        `;
+    }
+}
     }
     // Return n random models
     function getRandomModels(models, n) {
