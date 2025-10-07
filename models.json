@@ -1,0 +1,11 @@
+[
+  {
+    "id": "chatgpt",
+    "name": "ChatGPT",
+    "description": "Conversational AI for general use.",
+    "category": "chatbots",
+    "type": "Web App",
+    "image": "images/chatgpt.jpg",
+    "link": "https://chat.openai.com/"
+  }
+]
