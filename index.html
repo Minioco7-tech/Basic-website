@@ -117,7 +117,7 @@
         <h2 class="text-2xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
             Browse Categories
         </h2>
-        <div id="categoryGrid" class="grid grid-cols-3 gap-6 mb-8">
+        <div id="categoryGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
             <!-- JS will inject category cards here -->
         </div>
     </div>
@@ -244,16 +244,16 @@
         // Create category cards
         categories.forEach((cat, index) => {
             const card = document.createElement('div');
-            card.className = `cursor-pointer rounded-xl p-6 flex flex-col items-center justify-center hover:scale-105 transform transition-all duration-300 shadow-lg`;
+            card.className = `cursor-pointer rounded-xl p-4 sm:p-6 flex flex-col items-center justify-center hover:scale-105 transform transition-all duration-300 shadow-lg`;
             // Center the last card
             if (index === categories.length - 1) {
                 card.classList.add('col-start-2');
             }
             card.innerHTML = `
-                <div class="w-full h-32 bg-cover bg-center relative" style="background-image: url('${cat.image}');">
+                <div class="w-full h-32 bg-cover bg-center relative overflow-hidden" style="background-image: url('${cat.image}');">
                     <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center p-4">   
                         <i data-feather="${cat.icon}" class="w-8 h-8 mb-2"></i>
-                        <span class="text-white font-semibold text-center">${cat.name}</span>
+                        <span class=""text-white font-semibold text-center text-sm sm:text-base md:text-sm lg:text-base break-words truncate">${cat.name}</span>
                     </div>
                 </div>
             `;
