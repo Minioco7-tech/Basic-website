@@ -82,33 +82,44 @@
     }
     // Load model data from JSON
     async function loadModel() {
-        try {
-            const response = await fetch('models.json');
-            const models = await response.json();
-            const modelId = getModelIdFromUrl();
-            const model = models.find(m => m.id.toString() === modelId);
-            if (!model) {
-                modelContainer.innerHTML = '<p class="text-red-500 text-lg">Failed to load model data. Please go back to the home page.</p>';
-                return;
-            }
-            modelName.textContent = model.name;
-            modelDescription.textContent = model.description;
-            modelCategory.textContent = getCategoryName(model.category);
-            modelType.textContent = model.type;
-            // Use placeholder or image
-            if (model.image) {
-                modelImage.style.backgroundImage = `url('${model.image}')`;
-                modelImage.classList.add('bg-cover', 'bg-center');
-            }
-            // Try button
-            tryModel.onclick = () => {
-                window.open(model.link, '_blank');
-            };
-        } catch (err) {
-            console.error(err);
-            modelContainer.innerHTML = '<p class="text-red-500 text-lg">Failed to load model data. Please go back to the home page.</p>';
+    try {
+        const response = await fetch('./models.json');
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+        const models = await response.json();
+        const modelId = getModelIdFromUrl();
+        const model = models.find(m => m.id.toString() === modelId);
+
+        if (!model) {
+            modelContainer.innerHTML = `
+                <p class="text-red-400 text-lg">
+                    Could not find this model. Please return to the home page.
+                </p>
+            `;
+            return;
         }
+
+        modelName.textContent = model.name;
+        modelDescription.textContent = model.description;
+        modelCategory.textContent = getCategoryName(model.category);
+        modelType.textContent = model.type;
+
+        if (model.image) {
+            modelImage.style.backgroundImage = `url('${model.image}')`;
+            modelImage.classList.add('bg-cover', 'bg-center');
+        }
+
+        tryModel.onclick = () => window.open(model.link, '_blank');
+
+    } catch (err) {
+        console.error('❌ Failed to load model:', err);
+        modelContainer.innerHTML = `
+            <p class="text-red-400 text-lg">
+                Failed to load model data. Please refresh or go back to the home page.
+            </p>
+        `;
     }
+}
     // Back to home
     backHome.addEventListener('click', () => {
         window.location.href = 'index.html';
