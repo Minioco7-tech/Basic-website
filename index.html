@@ -230,16 +230,16 @@
     document.addEventListener('DOMContentLoaded', () => { 
         // Category definitions
         const categories = [
-            { key: 'writing', name: 'Writing & Productivity', icon: 'edit-3', colorFrom: 'from-purple-500', colorTo: 'to-pink-500' },
-            { key: 'creativity', name: 'Creativity & Design', icon: 'pen-tool', colorFrom: 'from-green-400', colorTo: 'to-blue-500' },
-            { key: 'learning', name: 'Learning & Research', icon: 'book', colorFrom: 'from-yellow-400', colorTo: 'to-orange-500' },
-            { key: 'business', name: 'Business & Marketing', icon: 'briefcase', colorFrom: 'from-indigo-400', colorTo: 'to-purple-500' },
-            { key: 'chatbots', name: 'Chatbots & Agents', icon: 'message-circle', colorFrom: 'from-pink-400', colorTo: 'to-red-500' },
-            { key: 'audio', name: 'Audio & Music', icon: 'volume-2', colorFrom: 'from-teal-400', colorTo: 'to-blue-400' },
-            { key: 'coding', name: 'Coding & Dev Tools', icon: 'code', colorFrom: 'from-blue-400', colorTo: 'to-indigo-500' },
-            { key: 'science', name: 'Science & Health', icon: 'cpu', colorFrom: 'from-red-400', colorTo: 'to-yellow-500' },
-            { key: 'finance', name: 'Finance & Analytics', icon: 'bar-chart-2', colorFrom: 'from-green-400', colorTo: 'to-teal-500' },
-            { key: 'everyday', name: 'Everyday Life', icon: 'smile', colorFrom: 'from-gray-400', colorTo: 'to-gray-600' },
+            { key: 'writing', name: 'Writing & Productivity', icon: 'edit-3', colorFrom: 'from-purple-500', colorTo: 'to-pink-500', image: 'images/writing.jpg' },
+            { key: 'creativity', name: 'Creativity & Design', icon: 'pen-tool', colorFrom: 'from-green-400', colorTo: 'to-blue-500', image: 'images/creativity.jpg' },
+            { key: 'learning', name: 'Learning & Research', icon: 'book', colorFrom: 'from-yellow-400', colorTo: 'to-orange-500', images: 'images/learning.jpg' },
+            { key: 'business', name: 'Business & Marketing', icon: 'briefcase', colorFrom: 'from-indigo-400', colorTo: 'to-purple-500', images: 'images/business.jpg' },
+            { key: 'chatbots', name: 'Chatbots & Agents', icon: 'message-circle', colorFrom: 'from-pink-400', colorTo: 'to-red-500', images: 'images/chatbots.jpg' },
+            { key: 'audio', name: 'Audio & Music', icon: 'volume-2', colorFrom: 'from-teal-400', colorTo: 'to-blue-400', images: 'images/audio.jpg' },
+            { key: 'coding', name: 'Coding & Dev Tools', icon: 'code', colorFrom: 'from-blue-400', colorTo: 'to-indigo-500', images: 'images/coding.jpg' },
+            { key: 'science', name: 'Science & Health', icon: 'cpu', colorFrom: 'from-red-400', colorTo: 'to-yellow-500', images: 'images/science.jpg' },
+            { key: 'finance', name: 'Finance & Analytics', icon: 'bar-chart-2', colorFrom: 'from-green-400', colorTo: 'to-teal-500', images: 'images/finance.jpg' },
+            { key: 'everyday', name: 'Everyday Life', icon: 'smile', colorFrom: 'from-gray-400', colorTo: 'to-gray-600', images: 'images/everyday.jpg' },
         ];
         // Reference to the category grid container   
         const categoryGrid = document.getElementById('categoryGrid');
@@ -253,8 +253,11 @@
                 card.classList.add('col-start-2');
             }
             card.innerHTML = `
-                <i data-feather="${cat.icon}" class="w-8 h-8 mb-2"></i>
-                <span class="text-white font-semibold text-center">${cat.name}</span>
+                <div class="w-full h-32 bg-cover bg-center" style="background-image: url('${cat.image}');"></div>
+                <div class="p-4 flex flex-col items-center justify-center bg-gradient-to-br ${cat.colorFrom} ${cat.colorTo}">    
+                    <i data-feather="${cat.icon}" class="w-8 h-8 mb-2"></i>
+                    <span class="text-white font-semibold text-center">${cat.name}</span>
+                </div>
             `;
             card.addEventListener('click', () => {
                 window.location.href = `category.html?category=${encodeURIComponent(cat.key)}`;
