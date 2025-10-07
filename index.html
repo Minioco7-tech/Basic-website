@@ -191,7 +191,7 @@
     let currentSearch = '';
     // Fetch models from JSON
     async function fetchModels() {
-        const response = await fetch('models.json');
+        const response = await fetch('models.json', { cache: 'no-store' });
         modelsData = await response.json();
         displayModels(getRandomModels(modelsData, 12)); // show 12 random models on load
         loadingState.classList.add('hidden');
