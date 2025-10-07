@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIviary — Discover AI Tools</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .category-btn {
+            transition: all 0.3s ease;
+        }
+        .category-btn.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
+        }
+        .model-tile {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: center;
+        }
+        .model-tile:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+        .search-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .search-input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body class="text-white">
+
+<!-- Navigation -->
+<nav class="bg-black bg-opacity-20 backdrop-blur-lg border-b border-white border-opacity-10 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <!-- Logo -->
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg flex items-center justify-center">
+                    <i data-feather="zap" class="w-4 h-4"></i>
+                </div>
+                <span class="text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                    AIviary
+                </span>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="flex-1 max-w-2xl mx-8">
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        id="searchInput"
+                        placeholder="Search AI tools..." 
+                        class="w-full px-4 py-2 rounded-full search-input text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all duration-300"
+                    >
+                    <i data-feather="search" class="absolute right-3 top-2 w-5 h-5 text-gray-400"></i>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">Home</a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">Categories</a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors duration-200">Featured</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Categories -->
+    <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+            Browse Categories
+        </h2>
+        <div id="categoryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+          const categoryGrid = document.getElementById('categoryGrid');
+
+          categories.forEach(cat => {
+            const card = document.createElement('div');
+            card.className = `cursor-pointer rounded-xl p-6 flex flex-col items-center justify-center bg-gradient-to-br ${cat.colorFrom} ${cat.colorTo} hover:scale-105 transform transition-all duration-300 shadow-lg`;
+            card.innerHTML = `
+                <i data-feather="${cat.icon}" class="w-8 h-8 mb-2"></i>
+                <span class="text-white font-semibold text-center">${cat.name}</span>
+  `            ;
+            card.addEventListener('click', () => {
+                window.location.href = `category.html?category=${encodeURIComponent(cat.key)}`;
+            });
+            categoryGrid.appendChild(card);
+        });
+
+        // Initialize Feather icons
+        feather.replace();
+        </div>
+    </div>
+
+    <!-- AI Models Grid -->
+    <div id="modelsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        <!-- Models will be dynamically populated here -->
+    </div>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="text-center py-12">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto"></div>
+        <p class="mt-4 text-gray-300">Loading AI tools...</p>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-black bg-opacity-20 backdrop-blur-lg border-t border-white border-opacity-10 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="md:col-span-2">
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg flex items-center justify-center">
+                        <i data-feather="zap" class="w-4 h-4"></i>
+                    </div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                        AIviary
+                    </span>
+                </div>
+                <p class="text-gray-300 leading-relaxed">
+                    Discover and explore the world's most innovative AI tools. From creative writing assistants to advanced analytics platforms, find the perfect AI companion for your needs.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="text-lg font-semibold text-white mb-4">Legal</h4>
+                <div class="space-y-2">
+                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Disclaimer</a>
+                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Privacy Policy</a>
+                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Terms of Use</a>
+                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">DMCA</a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-lg font-semibold text-white mb-4">Connect</h4>
+                <div class="space-y-2">
+                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">GitHub</a>
+                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Twitter</a>
+                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Contact</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-white border-opacity-10 mt-8 pt-8 text-center">
+            <p class="text-gray-400">
+                &copy; 2025 AIviary. All AI tools belong to their respective owners.
+            </p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // DOM Elements
+    const modelsGrid = document.getElementById('modelsGrid');
+    const loadingState = document.getElementById('loadingState');
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    const searchInput = document.getElementById('searchInput');
+    let modelsData = [];
+    let currentCategory = 'all';
+    let currentSearch = '';
+    // Fetch models from JSON
+    async function fetchModels() {
+    try {
+        const response = await fetch('./models.json');
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+        modelsData = await response.json();
+        displayModels(getRandomModels(modelsData, 12)); // show 12 random models on load
+        loadingState.classList.add('hidden');
+    } catch (err) {
+        console.error('❌ Failed to load models.json:', err);
+        loadingState.innerHTML = `
+            <p class="text-red-400 text-lg mt-6">
+                Failed to load AI tools. Please refresh or try again later.
+            </p>
+        `;
+    }
+}
+    }
+    // Return n random models
+    function getRandomModels(models, n) {
+        const shuffled = [...models].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, n);
+    }
+    // Display models in grid
+    function displayModels(models) {
+        modelsGrid.innerHTML = '';
+        models.forEach(model => {
+            const tile = document.createElement('div');
+            tile.className = 'model-tile group cursor-pointer bg-black bg-opacity-20 rounded-xl overflow-hidden border border-white border-opacity-10 hover:border-opacity-30 transition-all duration-300';
+            tile.innerHTML = `
+                <div class="aspect-w-16 aspect-h-9 bg-gradient-to-br from-purple-500 to-pink-500 relative">
+                    <div class="w-full h-32 bg-cover bg-center" style="background-image: url('${model.image}')"></div>
+                    <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+                        <div>
+                            <h3 class="text-white font-semibold text-sm mb-1">${model.name}</h3>
+                            <p class="text-gray-300 text-xs line-clamp-2">${model.description.substring(0, 80)}...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-gray-300">${model.type}</span>
+                        <span class="text-xs px-2 py-1 bg-purple-500 bg-opacity-20 text-purple-300 rounded-full">${getCategoryName(model.category)}</span>
+                    </div>
+                </div>
+            `;
+            // Redirect to model page on click
+            tile.addEventListener('click', () => {
+                window.location.href = `model.html?id=${encodeURIComponent(model.id)}`;
+            });
+            modelsGrid.appendChild(tile);
+        });
+    }
+    // Category display names
+    function getCategoryName(cat) {
+        const map = {
+            writing: 'Writing',
+            creativity: 'Creative',
+            learning: 'Learning',
+            business: 'Business',
+            chatbots: 'Chat',
+            audio: 'Audio',
+            coding: 'Coding',
+            science: 'Science',
+            finance: 'Finance',
+            everyday: 'Everyday'
+        };
+        return map[cat] || cat;
+    }
+    // Filter models by search & category
+    function filterModels() {
+        let filtered = modelsData.filter(model => {
+            const matchesCategory = currentCategory === 'all' || model.category === currentCategory;
+            const matchesSearch = model.name.toLowerCase().includes(currentSearch.toLowerCase()) ||
+                                  model.description.toLowerCase().includes(currentSearch.toLowerCase());
+            return matchesCategory && matchesSearch;
+        });
+        displayModels(filtered);
+    }
+    // Event listeners
+    categoryButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            categoryButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentCategory = btn.dataset.category;
+            filterModels();
+        });
+    });
+    searchInput.addEventListener('input', (e) => {
+        currentSearch = e.target.value;
+        filterModels();
+    });
+    // Initialize
+    const categories = [
+    { key: 'writing', name: 'Writing & Productivity', icon: 'edit-3', colorFrom: 'from-purple-500', colorTo: 'to-pink-500' },
+    { key: 'creativity', name: 'Creativity & Design', icon: 'pen-tool', colorFrom: 'from-green-400', colorTo: 'to-blue-500' },
+    { key: 'learning', name: 'Learning & Research', icon: 'book', colorFrom: 'from-yellow-400', colorTo: 'to-orange-500' },
+    { key: 'business', name: 'Business & Marketing', icon: 'briefcase', colorFrom: 'from-indigo-400', colorTo: 'to-purple-500' },
+    { key: 'chatbots', name: 'Chatbots & Agents', icon: 'message-circle', colorFrom: 'from-pink-400', colorTo: 'to-red-500' },
+    { key: 'audio', name: 'Audio & Music', icon: 'volume-2', colorFrom: 'from-teal-400', colorTo: 'to-blue-400' },
+    { key: 'coding', name: 'Coding & Dev Tools', icon: 'code', colorFrom: 'from-blue-400', colorTo: 'to-indigo-500' },
+    { key: 'science', name: 'Science & Health', icon: 'cpu', colorFrom: 'from-red-400', colorTo: 'to-yellow-500' },
+    { key: 'finance', name: 'Finance & Analytics', icon: 'bar-chart-2', colorFrom: 'from-green-400', colorTo: 'to-teal-500' },
+    { key: 'everyday', name: 'Everyday Life', icon: 'smile', colorFrom: 'from-gray-400', colorTo: 'to-gray-600' },
+];
+    document.addEventListener('DOMContentLoaded', fetchModels);
+    feather.replace();
+</script>
+
+</body>
+</html>
