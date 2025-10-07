@@ -86,23 +86,7 @@
             Browse Categories
         </h2>
         <div id="categoryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-          const categoryGrid = document.getElementById('categoryGrid');
-
-          categories.forEach(cat => {
-            const card = document.createElement('div');
-            card.className = `cursor-pointer rounded-xl p-6 flex flex-col items-center justify-center bg-gradient-to-br ${cat.colorFrom} ${cat.colorTo} hover:scale-105 transform transition-all duration-300 shadow-lg`;
-            card.innerHTML = `
-                <i data-feather="${cat.icon}" class="w-8 h-8 mb-2"></i>
-                <span class="text-white font-semibold text-center">${cat.name}</span>
-  `            ;
-            card.addEventListener('click', () => {
-                window.location.href = `category.html?category=${encodeURIComponent(cat.key)}`;
-            });
-            categoryGrid.appendChild(card);
-        });
-
-        // Initialize Feather icons
-        feather.replace();
+            <!-- Category cards will be injected here by JS -->
         </div>
     </div>
 
@@ -267,8 +251,27 @@
     { key: 'finance', name: 'Finance & Analytics', icon: 'bar-chart-2', colorFrom: 'from-green-400', colorTo: 'to-teal-500' },
     { key: 'everyday', name: 'Everyday Life', icon: 'smile', colorFrom: 'from-gray-400', colorTo: 'to-gray-600' },
 ];
-    document.addEventListener('DOMContentLoaded', fetchModels);
-    feather.replace();
+
+    const categoryGrid = document.getElementById('categoryGrid');
+
+    categories.forEach(cat => {
+        const card = document.createElement('div');
+        card.className = `cursor-pointer rounded-xl p-6 flex flex-col items-center justify-center bg-gradient-to-br ${cat.colorFrom} ${cat.colorTo} hover:scale-105 transform transition-all duration-300 shadow-lg`;
+        card.innerHTML = `
+            <i data-feather="${cat.icon}" class="w-8 h-8 mb-2"></i>
+            <span class="text-white font-semibold text-center">${cat.name}</span>
+    `    ;
+        card.addEventListener('click', () => {
+            window.location.href = `category.html?category=${encodeURIComponent(cat.key)}`;
+        });
+        categoryGrid.appendChild(card);
+    });
+
+    // Initialize Feather icons
+    document.addEventListener('DOMContentLoaded', () => {
+    fetchModels();       // Populate your model grid
+    feather.replace();   // Replace all feather icons in both categories and models
+});
 </script>
 
 </body>
