@@ -209,6 +209,8 @@
             const response = await fetch('./models.json');
             if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
             modelsData = await response.json();
+            
+            setupFuse();
             displayModels(getRandomModels(modelsData, 12)); // show 12 random models on load
             loadingState?.classList.add('hidden');
         } catch (err) {
@@ -252,6 +254,19 @@
         return shuffled.slice(0, n);
     }
 
+     // ----------------------------
+     // Fuzzy search with Fuse.js
+     // ----------------------------
+     let fuse;
+     function setupFuse() {
+         fuse = new Fuse(modelsData, {
+             keys: ['name', 'description', 'category'],
+             threshold: 0.4,      // 0 = exact, 1 = very loose
+             ignoreLocation: true,
+             isCaseSensitive: false
+         });
+     }
+
     // Capitalized display names
     function getCategoryName(cat) {
         const map = {};
@@ -259,17 +274,24 @@
         return map[cat] || cat;
     }
 
-    // Filter models by search & category
+    // Filter models by category and natural-text search
     function filterModels() {
-        let filtered = modelsData.filter(model => {
-            const matchesCategory = currentCategory === 'all' || model.category === currentCategory;
-            const matchesSearch =
-                model.name.toLowerCase().includes(currentSearch.toLowerCase()) ||
-                model.description.toLowerCase().includes(currentSearch.toLowerCase());
-            return matchesCategory && matchesSearch;
-        });
-        displayModels(filtered);
+        let results = modelsData;
+
+        // Filter by category
+        if (currentCategory !== 'all') {
+           results = results.filter(model => model.category.toLowerCase() === currentCategory.toLowerCase());
+        }
+
+        // Filter by search query using Fuse.js
+        if (currentSearch.trim()) {
+           results = fuse.search(currentSearch).map(r => r.item)
+                         .filter(m => currentCategory === 'all' || m.category.toLowerCase() === currentCategory.toLowerCase());
+        }
+
+        displayModels(results);
     }
+    
     // Render homepage categories grid
     function renderCategories() {
         if (!categoryGrid) return;
