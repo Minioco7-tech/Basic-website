@@ -97,49 +97,40 @@
 const modelsGrid = document.getElementById('modelsGrid');
 const loadingState = document.getElementById('loadingState');
 const categoryTitle = document.getElementById('categoryTitle');
+const randomiseBtn = document.getElementById('randomiseBtn');
 
 // Global array to store models currently displayed
 let currentModels = [];
 
-// Fisher-Yates shuffle
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
+// Unified categories array (same as index.html)
+const categories = [
+    { key: 'all', name: 'All Models' },
+    { key: 'writing', name: 'Writing & Productivity' },
+    { key: 'creativity', name: 'Creativity & Design' },
+    { key: 'learning', name: 'Learning & Research' },
+    { key: 'business', name: 'Business & Marketing' },
+    { key: 'chatbots', name: 'Chatbots & Agents' },
+    { key: 'audio', name: 'Audio & Music' },
+    { key: 'coding', name: 'Coding & Dev Tools' },
+    { key: 'science', name: 'Science & Health' },
+    { key: 'finance', name: 'Finance & Analytics' },
+    { key: 'everyday', name: 'Everyday Life' }
+];
+
+// Capitalized category display helper
+function getCategoryName(catKey) {
+    const map = {};
+    categories.forEach(c => map[c.key.toLowerCase()] = c.name);
+    return map[catKey.toLowerCase()] || catKey;
 }
 
-// Capitalize first letter helper
-function capitalizeFirstLetter(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-// Map category keys to display names
-function getCategoryName(cat) {
-    const map = {
-        writing: 'Writing & Productivity',
-        creativity: 'Creativity & Design',
-        learning: 'Learning & Research',
-        business: 'Business & Marketing',
-        chatbots: 'Chatbots & Agents',
-        audio: 'Audio & Music',
-        coding: 'Coding & Dev Tools',
-        science: 'Science & Health',
-        finance: 'Finance & Analytics',
-        everyday: 'Everyday Life',
-        all: 'All Models'
-    };
-    return map[cat.toLowerCase()] || capitalizeFirstLetter(cat);
-}
-
-// Get category key from URL
+// Get category key from URL (default to 'all')
 function getCategoryFromUrl() {
     const params = new URLSearchParams(window.location.search);
     return params.get('category') || 'all';
 }
 
-// Load and display models
+// Fetch models JSON and filter by category
 async function loadCategoryModels() {
     const categoryKey = getCategoryFromUrl();
     categoryTitle.textContent = getCategoryName(categoryKey);
@@ -149,13 +140,12 @@ async function loadCategoryModels() {
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const modelsData = await response.json();
 
-        // Filter models based on categoryKey (always lowercase for JSON match)
-        const filteredModels = categoryKey.toLowerCase() === 'all' 
-            ? modelsData 
-            : modelsData.filter(m => m.category === categoryKey.toLowerCase());
+        // Filter models; use lowercase for JSON matching
+        const filteredModels = categoryKey.toLowerCase() === 'all'
+            ? modelsData
+            : modelsData.filter(m => m.category.toLowerCase() === categoryKey.toLowerCase());
 
-        // Store a random selection of models
-        currentModels = getRandomModels(filteredModels, 12);
+        currentModels = getRandomModels(filteredModels, 12); // store selected models
         displayModels(currentModels);
         loadingState.classList.add('hidden');
     } catch (err) {
@@ -164,7 +154,7 @@ async function loadCategoryModels() {
     }
 }
 
-// Pick n random models from an array
+// Pick n random models
 function getRandomModels(models, n) {
     const shuffled = [...models].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, n);
@@ -181,6 +171,7 @@ function displayModels(models) {
             <div class="p-3">
                 <h3 class="text-white font-semibold text-sm mb-1">${model.name}</h3>
                 <p class="text-gray-300 text-xs line-clamp-2">${model.description.substring(0,80)}...</p>
+                <span class="text-xs px-2 py-1 bg-purple-500 bg-opacity-20 text-purple-300 rounded-full">${getCategoryName(model.category)}</span>
             </div>
         `;
         tile.addEventListener('click', () => {
@@ -199,12 +190,12 @@ document.getElementById('randomiseBtn').addEventListener('click', () => {
     }
 });
 
-// Initialize on DOMContentLoaded
-
+    // Initialize on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
     loadCategoryModels();
     feather.replace();
 });
+    
 </script>
 
 </body>
