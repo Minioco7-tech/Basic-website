@@ -118,16 +118,16 @@ return params.get('category');
 
 function getCategoryName(cat) {
     const map = {
-        Writing: 'Writing & Productivity',
-        Creativity: 'Creativity & Design',
-        Learning: 'Learning & Research',
-        Business: 'Business & Marketing',
-        Chatbots: 'Chatbots & Agents',
-        Audio: 'Audio & Music',
-        Coding: 'Coding & Dev Tools',
-        Science: 'Science & Health',
-        Finance: 'Finance & Analytics',
-        Everyday: 'Everyday Life'
+        writing: 'Writing',
+        creativity: 'Creative',
+        learning: 'Learning',
+        business: 'Business',
+        chatbots: 'Chat',
+        audio: 'Audio',
+        coding: 'Coding',
+        science: 'Science',
+        finance: 'Finance',
+        everyday: 'Everyday'
     };
     return map[cat] || cat;
 }
