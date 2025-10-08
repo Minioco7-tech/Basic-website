@@ -48,11 +48,44 @@
                 if (!response.ok) throw new Error('Failed to load models.json');
                 const models = await response.json();
 
-                const filtered = models.filter(model =>
-                    model.name.toLowerCase().includes(searchQuery) ||
-                    model.description.toLowerCase().includes(searchQuery) ||
-                    model.category.toLowerCase().includes(searchQuery)
+               // --- Enhanced Search Logic --- //
+                const categories = {
+                    all:'All',
+                    writing: 'Writing',
+                    design: 'Design',
+                    learning: 'Learning',
+                    business: 'Business',
+                    chatbots: 'Chatbots',
+                    music: 'Music',
+                    coding: 'Coding',
+                    science: 'Science',
+                    finance: 'Finance',
+                    health: 'Health'
+                };
+                
+                // Check if the query matches a known category key or name
+                const categoryMatch = Object.keys(categories).find(
+                    key =>
+                        searchQuery === key ||
+                        categories[key].toLowerCase().includes(searchQuery)
                 );
+                
+                let filtered;
+                
+                if (searchQuery === 'all' || searchQuery === 'everything' || searchQuery === 'all tools' || searchQuery === 'catalogue') {
+                    // Show *everything*
+                    filtered = models;
+                } else if (categoryMatch) {
+                    // Show all models from that category
+                    filtered = models.filter(m => m.category === categoryMatch);
+                } else {
+                    // Default: keyword match (less strict)
+                    filtered = models.filter(m =>
+                        m.name.toLowerCase().includes(searchQuery) ||
+                        m.description.toLowerCase().includes(searchQuery) ||
+                        m.category.toLowerCase().includes(searchQuery)
+                    );
+                }
 
                 if (filtered.length === 0) {
                     noResults.classList.remove('hidden');
