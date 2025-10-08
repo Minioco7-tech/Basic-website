@@ -317,7 +317,26 @@
             });
             categoryGrid.appendChild(card);
         });
-        feather.replace();   // Replace all feather icons in both categories and models
+        
+        fetchModels();
+        feather.replace();   
+
+        // 🔍 Live search + redirect on Enter
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value;
+            filterModels(); // live filtering as you type
+        });
+        
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const query = searchInput.value.trim();
+                if (query) {
+                    window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+                }
+            }
+        });
+
         window.addEventListener('scroll', () => {
             const glow = document.querySelector('.animate-pulse-glow');
             if (glow) {
