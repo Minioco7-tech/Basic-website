@@ -222,6 +222,29 @@
             }
         }
     }
+    
+    // Display models
+    function displayModels(models) {
+        if (!modelsGrid) return;
+        modelsGrid.innerHTML = '';
+    
+        models.forEach(model => {
+            const tile = document.createElement('div');
+            tile.className = 'model-tile group cursor-pointer bg-black bg-opacity-20 rounded-xl overflow-hidden border border-white border-opacity-10 hover:border-opacity-30 transition-all duration-300';
+            tile.innerHTML = `
+                <div class="w-full h-32 bg-cover bg-center" style="background-image: url('${model.image}')"></div>
+                <div class="p-3">
+                    <h3 class="text-white font-semibold text-sm mb-1">${model.name}</h3>
+                    <p class="text-gray-300 text-xs line-clamp-2">${model.description.substring(0,80)}...</p>
+                    <span class="text-xs px-2 py-1 bg-purple-500 bg-opacity-20 text-purple-300 rounded-full">${getCategoryName(model.category)}</span>
+                </div>
+            `;
+            tile.addEventListener('click', () => {
+                window.location.href = `model.html?id=${encodeURIComponent(model.id)}`;
+            });
+            modelsGrid.appendChild(tile);
+        });
+    }
 
     // Return n random models
     function getRandomModels(models, n) {
@@ -229,46 +252,11 @@
         return shuffled.slice(0, n);
     }
 
-    // Display models in grid
-    function displayModels(models) {
-        if (!modelsGrid) return;
-        modelsGrid.innerHTML = '';
-
-        models.forEach(model => {
-            const tile = document.createElement('div');
-            tile.className = 'model-tile group cursor-pointer bg-black bg-opacity-20 rounded-xl overflow-hidden border border-white border-opacity-10 hover:border-opacity-30 transition-all duration-300';
-            tile.innerHTML = `
-                <div class="aspect-w-16 aspect-h-9 bg-gradient-to-br from-purple-500 to-pink-500 relative">
-                    <div class="w-full h-32 bg-cover bg-center" style="background-image: url('${model.image}')"></div>
-                    <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
-                        <div>
-                            <h3 class="text-white font-semibold text-sm mb-1">${model.name}</h3>
-                            <p class="text-gray-300 text-xs line-clamp-2">${model.description.substring(0, 80)}...</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-3">
-                    <div class="flex justify-between items-center">
-                        <span class="text-xs text-gray-300">${model.type}</span>
-                        <span class="text-xs px-2 py-1 bg-purple-500 bg-opacity-20 text-purple-300 rounded-full">${getCategoryName(model.category)}</span>
-                    </div>
-                </div>
-            `;
-            // Redirect to model page on click
-            tile.addEventListener('click', () => {
-                window.location.href = `model.html?id=${encodeURIComponent(model.id)}`;
-            });
-            modelsGrid.appendChild(tile);
-        });
-
-        // If nothing matches, show message
-        if (models.length === 0) {
-            modelsGrid.innerHTML = `
-                <div class="col-span-full text-center text-gray-300 py-12">
-                    <p class="text-lg">No results found for "<span class="text-white font-semibold">${currentSearch}</span>".</p>
-                </div>
-            `;
-        }
+    // Capitalized display names
+    function getCategoryName(cat) {
+        const map = {};
+        categories.forEach(c => map[c.key] = c.name);
+        return map[cat] || cat;
     }
 
     // Filter models by search & category
@@ -281,46 +269,20 @@
             return matchesCategory && matchesSearch;
         });
         displayModels(filtered);
-    } 
+    }
+    // Render homepage categories grid
+    function renderCategories() {
+        if (!categoryGrid) return;
+        categoryGrid.innerHTML = '';
     
-    // Initialize page
-    document.addEventListener('DOMContentLoaded', () => { 
-        fetchModels();
-        feather.replace();
-
-            // Live search
-        if (searchInput) {
-            searchInput.addEventListener('input', e => {
-                currentSearch = e.target.value;
-                filterModels();
-            });
-            searchInput.addEventListener('keydown', e => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    const query = searchInput.value.trim();
-                    if (query) window.location.href = `search.html?q=${encodeURIComponent(query)}`;
-                }
-            });
-        }
-    });
-        
-
-        // Reference to the category grid container   
-        const categoryGrid = document.getElementById('categoryGrid');
-
-        // Create category cards
-        categories.forEach((cat, index) => {
+        categories.forEach(cat => {
             const card = document.createElement('div');
             card.className = `cursor-pointer rounded-xl p-4 sm:p-6 flex flex-col items-center justify-center hover:scale-105 transform transition-all duration-300 shadow-lg`;
-            // Center the last card
-            if (index === categories.length - 1) {
-                card.classList.add('col-start-2');
-            }
             card.innerHTML = `
-                <div class="w-full h-32 bg-cover bg-center relative overflow-hidden" style="background-image: url('${cat.image}');">
+                <div class="w-full h-32 bg-cover bg-center relative overflow-hidden ${cat.colorFrom} ${cat.colorTo}" style="background-image: url('${cat.image}');">
                     <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center p-4">   
                         <i data-feather="${cat.icon}" class="w-8 h-8 mb-2"></i>
-                        <span class=""text-white font-semibold text-center text-sm sm:text-base md:text-sm lg:text-base break-words truncate">${cat.name}</span>
+                        <span class="text-white font-semibold text-center text-sm sm:text-base md:text-sm lg:text-base break-words truncate">${cat.name}</span>
                     </div>
                 </div>
             `;
@@ -329,30 +291,25 @@
             });
             categoryGrid.appendChild(card);
         });
-        
+    
+        feather.replace();
+    }
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        renderCategories();
         fetchModels();
-        feather.replace();   
-
-        // 🔍 Live search + redirect on Enter
-        searchInput.addEventListener('input', (e) => {
+    
+        searchInput?.addEventListener('input', e => {
             currentSearch = e.target.value;
-            filterModels(); // live filtering as you type
+            filterModels();
         });
-        
-        searchInput.addEventListener('keydown', (e) => {
+    
+        searchInput?.addEventListener('keydown', e => {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 const query = searchInput.value.trim();
-                if (query) {
-                    window.location.href = `search.html?q=${encodeURIComponent(query)}`;
-                }
-            }
-        });
-
-        window.addEventListener('scroll', () => {
-            const glow = document.querySelector('.animate-pulse-glow');
-            if (glow) {
-                glow.style.opacity = Math.max(0, 1 - window.scrollY / 300);
+                if (query) window.location.href = `search.html?q=${encodeURIComponent(query)}`;
             }
         });
     });
