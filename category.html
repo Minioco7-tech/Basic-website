@@ -142,7 +142,8 @@ async function loadCategoryModels() {
         const modelsData = await response.json();
 
         const filteredModels = modelsData.filter(m => m.category === categoryKey);
-        displayModels(getRandomModels(filteredModels, 12));
+        currentModels = getRandomModels(filteredModels, 12); // STORE here
+        displayModels(currentModels);  // DISPLAY the same array
         loadingState.classList.add('hidden');
     } catch (err) {
         console.error('Failed to load models:', err);
