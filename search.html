@@ -17,7 +17,15 @@
 
     <!-- Search Results Section -->
     <main class="flex-1 container mx-auto px-4 py-10">
-        <h2 class="text-2xl font-bold mb-6">Search Results</h2>
+         
+        <div class="flex justify-between items-center mb-6">
+             <h2 id="categoryTitle" class="text-2xl font-bold"></h2>
+             <button id="randomiseBtn" class="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white text-sm rounded-lg transition flex items-center space-x-2">
+                 <i data-feather="shuffle" class="w-4 h-4"></i>
+                 <span>Randomise</span>
+             </button>
+        </div>
+        
         <div id="resultsGrid" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
         <div id="noResults" class="text-center text-gray-400 mt-12 hidden">
             No results found for "<span id="queryText" class="text-white"></span>" 😕
