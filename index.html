@@ -170,32 +170,85 @@
 </footer>
 
 <script>
-    // DOM Elements
+   // DOM Elements
+    
     const modelsGrid = document.getElementById('modelsGrid');
     const loadingState = document.getElementById('loadingState');
     const searchInput = document.getElementById('searchInput');
+
     let modelsData = [];
     let currentCategory = 'all';
     let currentSearch = '';
+
     // Fetch models from JSON
     async function fetchModels() {
         try {
-            const response = await fetch('./models.json'); // Check this path
+            const response = await fetch('./models.json');
             if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-    
             modelsData = await response.json();
             displayModels(getRandomModels(modelsData, 12)); // show 12 random models on load
-            loadingState.classList.add('hidden');
+            loadingState?.classList.add('hidden');
         } catch (err) {
             console.error('❌ Failed to load models.json:', err);
-            loadingState.innerHTML = `
-                <p class="text-red-400 text-lg mt-6">
-                    Failed to load AI tools. Please refresh or try again later.
-                </p>
+            if (loadingState) {
+                loadingState.innerHTML = `
+                    <p class="text-red-400 text-lg mt-6">
+                        Failed to load AI tools. Please refresh or try again later.
+                    </p>
+                `;
+            }
+        }
+    }
+
+    // Return n random models
+    function getRandomModels(models, n) {
+        const shuffled = [...models].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, n);
+    }
+
+    // Display models in grid
+    function displayModels(models) {
+        if (!modelsGrid) return;
+        modelsGrid.innerHTML = '';
+
+        models.forEach(model => {
+            const tile = document.createElement('div');
+            tile.className = 'model-tile group cursor-pointer bg-black bg-opacity-20 rounded-xl overflow-hidden border border-white border-opacity-10 hover:border-opacity-30 transition-all duration-300';
+            tile.innerHTML = `
+                <div class="aspect-w-16 aspect-h-9 bg-gradient-to-br from-purple-500 to-pink-500 relative">
+                    <div class="w-full h-32 bg-cover bg-center" style="background-image: url('${model.image}')"></div>
+                    <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+                        <div>
+                            <h3 class="text-white font-semibold text-sm mb-1">${model.name}</h3>
+                            <p class="text-gray-300 text-xs line-clamp-2">${model.description.substring(0, 80)}...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs text-gray-300">${model.type}</span>
+                        <span class="text-xs px-2 py-1 bg-purple-500 bg-opacity-20 text-purple-300 rounded-full">${getCategoryName(model.category)}</span>
+                    </div>
+                </div>
+            `;
+            // Redirect to model page on click
+            tile.addEventListener('click', () => {
+                window.location.href = `model.html?id=${encodeURIComponent(model.id)}`;
+            });
+            modelsGrid.appendChild(tile);
+        });
+
+        // If nothing matches, show message
+        if (models.length === 0) {
+            modelsGrid.innerHTML = `
+                <div class="col-span-full text-center text-gray-300 py-12">
+                    <p class="text-lg">No results found for "<span class="text-white font-semibold">${currentSearch}</span>".</p>
+                </div>
             `;
         }
     }
-    
+
+    // Category display names
     function getCategoryName(cat) {
         const map = {
             writing: 'Writing',
@@ -211,18 +264,18 @@
         };
         return map[cat] || cat;
     }
+
     // Filter models by search & category
     function filterModels() {
         let filtered = modelsData.filter(model => {
             const matchesCategory = currentCategory === 'all' || model.category === currentCategory;
-            const matchesSearch = model.name.toLowerCase().includes(currentSearch.toLowerCase()) ||
-                                  model.description.toLowerCase().includes(currentSearch.toLowerCase());
+            const matchesSearch =
+                model.name.toLowerCase().includes(currentSearch.toLowerCase()) ||
+                model.description.toLowerCase().includes(currentSearch.toLowerCase());
             return matchesCategory && matchesSearch;
         });
         displayModels(filtered);
-    }
-
-    
+    } 
     // Initialize Feather icons
     document.addEventListener('DOMContentLoaded', () => { 
         // Category definitions
