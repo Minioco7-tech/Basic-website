@@ -105,8 +105,8 @@
     
     <!-- Glow Overlay -->
     <div class="absolute inset-0 flex items-center justify-center">
-        <div class="w-64 h-64 rounded-full bg-gradient-radial from-white/60 via-transparent to-transparent animate-pulse-glow"></div>
-        <div class="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div class="w-124 h-16 rounded-full bg-gradient-radial from-white/60 via-transparent to-transparent animate-pulse-glow"></div>
+        <div class="absolute bottom-0 inset-x-0 h-2 bg-gradient-to-t from-black/60 to-transparent"></div>
     </div>
 </section>
     
@@ -117,7 +117,7 @@
         <h2 class="text-2xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
             Browse Categories
         </h2>
-        <div id="categoryGrid" class="grid grid-cols-3 gap-6 mb-8">
+        <div id="categoryGrid" class="grid grid-cols-3 :grid-cols-2 gap-6 mb-8">
             <!-- JS will inject category cards here -->
         </div>
     </div>
@@ -227,16 +227,17 @@
     document.addEventListener('DOMContentLoaded', () => { 
         // Category definitions
         const categories = [
-            { key: 'writing', name: 'Writing & Productivity', icon: 'edit-3', colorFrom: 'from-purple-500', colorTo: 'to-pink-500', image: 'image-AI.jpg' },
-            { key: 'creativity', name: 'Creativity & Design', icon: 'pen-tool', colorFrom: 'from-green-400', colorTo: 'to-blue-500', image: 'image-AI.jpg' },
-            { key: 'learning', name: 'Learning & Research', icon: 'book', colorFrom: 'from-yellow-400', colorTo: 'to-orange-500', image: 'image-AI.jpg' },
-            { key: 'business', name: 'Business & Marketing', icon: 'briefcase', colorFrom: 'from-indigo-400', colorTo: 'to-purple-500', image: 'image-AI.jpg' },
-            { key: 'chatbots', name: 'Chatbots & Agents', icon: 'message-circle', colorFrom: 'from-pink-400', colorTo: 'to-red-500', image: 'image-AI.jpg' },
-            { key: 'audio', name: 'Audio & Music', icon: 'volume-2', colorFrom: 'from-teal-400', colorTo: 'to-blue-400', image: 'image-AI.jpg' },
-            { key: 'coding', name: 'Coding & Dev Tools', icon: 'code', colorFrom: 'from-blue-400', colorTo: 'to-indigo-500', image: 'image-AI.jpg' },
-            { key: 'science', name: 'Science & Health', icon: 'cpu', colorFrom: 'from-red-400', colorTo: 'to-yellow-500', image: 'image-AI.jpg' },
-            { key: 'finance', name: 'Finance & Analytics', icon: 'bar-chart-2', colorFrom: 'from-green-400', colorTo: 'to-teal-500', image: 'image-AI.jpg' },
-            { key: 'everyday', name: 'Everyday Life', icon: 'smile', colorFrom: 'from-gray-400', colorTo: 'to-gray-600', image: 'image-AI.jpg' },
+            { key: 'writing', name: 'Writing', icon: 'edit-3', colorFrom: 'from-purple-500', colorTo: 'to-pink-500', image: 'image-AI.jpg' },
+            { key: 'design', name: 'Design', icon: 'pen-tool', colorFrom: 'from-green-400', colorTo: 'to-blue-500', image: 'image-AI.jpg' },
+            { key: 'learning', name: 'Learning', icon: 'book', colorFrom: 'from-yellow-400', colorTo: 'to-orange-500', image: 'image-AI.jpg' },
+            { key: 'business', name: 'Business', icon: 'briefcase', colorFrom: 'from-indigo-400', colorTo: 'to-purple-500', image: 'image-AI.jpg' },
+            { key: 'chatbots', name: 'Chatbots', icon: 'message-circle', colorFrom: 'from-pink-400', colorTo: 'to-red-500', image: 'image-AI.jpg' },
+            { key: 'music', name: 'Music', icon: 'volume-2', colorFrom: 'from-teal-400', colorTo: 'to-blue-400', image: 'image-AI.jpg' },
+            { key: 'coding', name: 'Coding', icon: 'code', colorFrom: 'from-blue-400', colorTo: 'to-indigo-500', image: 'image-AI.jpg' },
+            { key: 'science', name: 'Science', icon: 'cpu', colorFrom: 'from-red-400', colorTo: 'to-yellow-500', image: 'image-AI.jpg' },
+            { key: 'finance', name: 'Finance', icon: 'bar-chart-2', colorFrom: 'from-green-400', colorTo: 'to-teal-500', image: 'image-AI.jpg' },
+            { key: 'speech', name: 'Speech', icon: 'smile', colorFrom: 'from-gray-400', colorTo: 'to-gray-600', image: 'image-AI.jpg' },
+            { key: 'health', name: 'Health', icon: 'smile', colorFrom: 'from-gray-400', colorTo: 'to-gray-600', image: 'image-AI.jpg' }
         ];
         // Reference to the category grid container   
         const categoryGrid = document.getElementById('categoryGrid');
