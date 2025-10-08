@@ -98,10 +98,10 @@ const modelsGrid = document.getElementById('modelsGrid');
 const loadingState = document.getElementById('loadingState');
 const categoryTitle = document.getElementById('categoryTitle');
 
- // Global array to store models currently displayed
+// Global array to store models currently displayed
 let currentModels = [];
 
-  // Fisher-Yates shuffle
+// Fisher-Yates shuffle
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -109,30 +109,37 @@ function shuffleArray(array) {
     }
     return array;
 }
-    
-    
-function getCategoryFromUrl() {
-const params = new URLSearchParams(window.location.search);
-return params.get('category');
+
+// Capitalize first letter helper
+function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+// Map category keys to display names
 function getCategoryName(cat) {
     const map = {
-        all: 'all',
-        writing: 'writing',
-        creativity: 'creative',
-        learning: 'learning',
-        business: 'business',
-        chatbots: 'chat',
-        music: 'music',
-        coding: 'coding',
-        science: 'science',
-        finance: 'finance',
-        everyday: 'everyday'
+        writing: 'Writing & Productivity',
+        creativity: 'Creativity & Design',
+        learning: 'Learning & Research',
+        business: 'Business & Marketing',
+        chatbots: 'Chatbots & Agents',
+        audio: 'Audio & Music',
+        coding: 'Coding & Dev Tools',
+        science: 'Science & Health',
+        finance: 'Finance & Analytics',
+        everyday: 'Everyday Life',
+        all: 'All Models'
     };
-    return map[cat] || cat;
+    return map[cat.toLowerCase()] || capitalizeFirstLetter(cat);
 }
 
+// Get category key from URL
+function getCategoryFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('category') || 'all';
+}
+
+// Load and display models
 async function loadCategoryModels() {
     const categoryKey = getCategoryFromUrl();
     categoryTitle.textContent = getCategoryName(categoryKey);
@@ -142,9 +149,14 @@ async function loadCategoryModels() {
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const modelsData = await response.json();
 
-        const filteredModels = modelsData.filter(m => m.category === categoryKey);
-        currentModels = getRandomModels(filteredModels, 12); // STORE here
-        displayModels(currentModels);  // DISPLAY the same array
+        // Filter models based on categoryKey (always lowercase for JSON match)
+        const filteredModels = categoryKey.toLowerCase() === 'all' 
+            ? modelsData 
+            : modelsData.filter(m => m.category === categoryKey.toLowerCase());
+
+        // Store a random selection of models
+        currentModels = getRandomModels(filteredModels, 12);
+        displayModels(currentModels);
         loadingState.classList.add('hidden');
     } catch (err) {
         console.error('Failed to load models:', err);
@@ -152,11 +164,13 @@ async function loadCategoryModels() {
     }
 }
 
+// Pick n random models from an array
 function getRandomModels(models, n) {
     const shuffled = [...models].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, n);
 }
 
+// Display models in the grid
 function displayModels(models) {
     modelsGrid.innerHTML = '';
     models.forEach(model => {
@@ -176,7 +190,7 @@ function displayModels(models) {
     });
 }
 
-// Randomise button
+// Randomise button functionality
 document.getElementById('randomiseBtn').addEventListener('click', () => {
     if (currentModels.length > 0) {
         currentModels = shuffleArray([...currentModels]);
@@ -184,6 +198,8 @@ document.getElementById('randomiseBtn').addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 });
+
+// Initialize on DOMContentLoaded
 
 document.addEventListener('DOMContentLoaded', () => {
     loadCategoryModels();
