@@ -101,7 +101,7 @@
     {
         "id": 12,
         "name": "Soundraw",
-        "category": "audio",
+        "category": "music",
         "type": "Web App",
         "description": "AI music generator that creates royalty-free background music for your creative projects.",
         "image": "assets/images/placeholder.png",
