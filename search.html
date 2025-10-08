@@ -87,6 +87,9 @@
                     );
                 }
 
+                // 🔀 Randomize the order of the results
+                filtered = filtered.sort(() => 0.5 - Math.random());
+
                 if (filtered.length === 0) {
                     noResults.classList.remove('hidden');
                     return;
