@@ -51,6 +51,9 @@
     // Display search term
     queryText.textContent = searchQuery;
 
+    // Global array to store models currently displayed
+    let currentModels = [];
+
     // ✅ Category synonyms for natural matching
     const categorySynonyms = {
         writing: ['writing', 'writer', 'content', 'copy', 'text', 'document', 'email'],
