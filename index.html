@@ -83,7 +83,7 @@
             Discover the World's Smartest AI Tools
         </h1>
         <p class="text-lg md:text-xl text-gray-200 mb-8">
-            Search models or browse categories below.
+            If you're new to AI or looking for new inspiration... keep scrolling!
         </p>
 
         <!-- Search Bar -->
@@ -276,22 +276,57 @@
         return map[cat] || cat;
     }
 
-    // Filter models by category and natural-text search
-    function filterModels() {
-        let results = modelsData;
+    async function searchModels(query) {
+        const resultsGrid = document.getElementById('resultsGrid');
+        const loadingState = document.getElementById('loadingState');
+        loadingState.classList.remove('hidden');
+        resultsGrid.innerHTML = '';
+    
+        try {
+            const response = await fetch('./models.json');
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+            const models = await response.json();
+    
+            const keywords = query.toLowerCase().split(/\s+/).filter(Boolean);
+    
+            // Compute a score for each model
+            const scored = models.map(model => {
+                const haystack = (
+                    (model.name || '') + ' ' +
+                    (model.description || '') + ' ' +
+                    (model.category || '') + ' ' +
+                    (model.tags ? model.tags.join(' ') : '')
+                ).toLowerCase();
+    
+                let score = 0;
+                keywords.forEach(word => {
+                    if (haystack.includes(word)) score++;
+                });
+                // Bonus if matches category name partially
+                if (model.category && query.toLowerCase().includes(model.category.toLowerCase()))
+                    score += 2;
+    
+                return { model, score };
+            });
 
-        // Filter by category
-        if (currentCategory !== 'all') {
-           results = results.filter(model => model.category.toLowerCase() === currentCategory.toLowerCase());
+            // Filter and sort
+            const filtered = scored
+                .filter(item => item.score > 0)
+                .sort((a, b) => b.score - a.score)
+                .map(item => item.model);
+    
+            loadingState.classList.add('hidden');
+    
+            if (filtered.length === 0) {
+                resultsGrid.innerHTML = `<p class="text-gray-400 text-lg mt-6">No results found for "${query}"</p>`;
+                return;
+            }
+    
+            displayModels(filtered); // use your existing grid display function
+        } catch (err) {
+            console.error('Search failed:', err);
+            loadingState.innerHTML = '<p class="text-red-400 text-lg mt-6">Error loading search results.</p>';
         }
-
-        // Filter by search query using Fuse.js
-        if (currentSearch.trim()) {
-           results = fuse.search(currentSearch).map(r => r.item)
-                         .filter(m => currentCategory === 'all' || m.category.toLowerCase() === currentCategory.toLowerCase());
-        }
-
-        displayModels(results);
     }
     
     // Render homepage categories grid
