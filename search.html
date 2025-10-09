@@ -41,7 +41,8 @@
     const resultsGrid = document.getElementById('resultsGrid');
     const noResults = document.getElementById('noResults');
     const queryText = document.getElementById('queryText');
-
+    const stopwords = ['i','want','to','a','the','and','for','of','in','on','is','with','my','you','it','this','that','at'];
+        
     // Get query from URL
     const params = new URLSearchParams(window.location.search);
     const searchQuery = params.get('q')?.trim().toLowerCase() || '';
@@ -49,6 +50,28 @@
     // Display search term
     queryText.textContent = searchQuery;
 
+    // ✅ Category synonyms for natural matching
+    const categorySynonyms = {
+        writing: ['writing', 'writer', 'content', 'copy', 'text', 'document', 'email'],
+        design: ['design', 'art', 'image', 'photo', 'logo', 'graphic', 'visual'],
+        learning: ['learning', 'education', 'research', 'study', 'teach', 'knowledge'],
+        business: ['business', 'marketing', 'sales', 'brand', 'startup', 'work', 'help'],
+        chatbots: ['chat', 'bot', 'assistant', 'agent', 'conversation', 'support'],
+        music: ['music', 'audio', 'sound', 'song', 'beat', 'voice', 'sing'],
+        coding: ['code', 'coding', 'developer', 'programming', 'software', 'tech'],
+        science: ['science', 'health', 'medicine', 'bio', 'lab', 'research'],
+        finance: ['finance', 'money', 'analytics', 'data', 'economy', 'bank', 'invest'],
+        health: ['health', 'fitness', 'wellbeing', 'medical', 'care', 'wellness']
+    };
+
+    // Helper: check if query matches a category
+    function getMatchedCategory(keywords) {
+        for (const [key, synonyms] of Object.entries(categorySynonyms)) {
+            if (keywords.some(word => synonyms.includes(word))) return key;
+        }
+        return null;
+    }
+    
     // Enhanced natural search logic
     async function fetchAndDisplayResults() {
         try {
@@ -56,55 +79,41 @@
             if (!response.ok) throw new Error('Failed to load models.json');
             const models = await response.json();
     
-            // 🔍 Prepare search tokens (split into words)
-            const keywords = searchQuery.split(/\s+/).filter(Boolean);
-    
-            // ✅ Category synonyms for natural matching
-            const categorySynonyms = {
-                writing: ['writing', 'writer', 'content', 'copy', 'text', 'document', 'email'],
-                design: ['design', 'art', 'image', 'photo', 'logo', 'graphic', 'visual'],
-                learning: ['learning', 'education', 'research', 'study', 'teach', 'knowledge'],
-                business: ['business', 'marketing', 'sales', 'brand', 'startup', 'work', 'help'],
-                chatbots: ['chat', 'bot', 'assistant', 'agent', 'conversation', 'support'],
-                music: ['music', 'audio', 'sound', 'song', 'beat', 'voice', 'sing'],
-                coding: ['code', 'coding', 'developer', 'programming', 'software', 'tech'],
-                science: ['science', 'health', 'medicine', 'bio', 'lab', 'research'],
-                finance: ['finance', 'money', 'analytics', 'data', 'economy', 'bank', 'invest'],
-                health: ['health', 'fitness', 'wellbeing', 'medical', 'care', 'wellness']
-            };
+           
+            const keywords = searchQuery
+                .split(/\s+/)
+                .map(w => w.toLowerCase())
+                .filter(Boolean)
+                .filter(word => !stopwords.includes(word));
     
             let filtered = [];
+            const matchedCategory = getMatchedCategory(keywords);
     
-            // Check for direct category match (e.g. “business tools”)
-            let matchedCategory = null;
-            for (const [key, synonyms] of Object.entries(categorySynonyms)) {
-                if (keywords.some(word => synonyms.includes(word))) {
-                    matchedCategory = key;
-                    break;
-                }
-            }
-    
+            // Show all models for general queries like "all"
             if (['all', 'everything', 'all tools', 'catalogue'].includes(searchQuery)) {
-                // Show all models
                 filtered = models;
             } 
+            // Match category if found
             else if (matchedCategory) {
-                // Match category-related words
-                filtered = models.filter(m => m.category.toLowerCase().includes(matchedCategory));
+                filtered = models.filter(m => m.category.toLowerCase() === matchedCategory);
             } 
+            // General fuzzy search with Fuse.js
             else {
-                // General fuzzy keyword match
-                filtered = models.filter(m => {
-                    const text = `${m.name} ${m.description} ${m.category}`.toLowerCase();
-                    // Check if any keyword is present in text
-                    return keywords.some(word => text.includes(word));
+                const fuse = new Fuse(models, {
+                    keys: ['name', 'description', 'category', 'type'],
+                    threshold: 0.4,        // fuzzy tolerance
+                    ignoreLocation: true,
+                    includeScore: true
                 });
+    
+                filtered = fuse.search(searchQuery)
+                    .map(result => result.item);
             }
     
-            // 🔀 Randomize the order of results
+            // Randomize results slightly for variety
             filtered = filtered.sort(() => 0.5 - Math.random());
     
-            // Display or show “no results”
+            // Display results or show noResults
             if (filtered.length === 0) {
                 noResults.classList.remove('hidden');
                 return;
@@ -127,14 +136,15 @@
                 `;
                 resultsGrid.appendChild(card);
             });
+    
         } catch (error) {
             console.error('Error loading models:', error);
             noResults.classList.remove('hidden');
         }
     }
     
-    fetchAndDisplayResults();   
-    
+    // Run search
+    fetchAndDisplayResults();
     </script>
 </body>
 </html>
