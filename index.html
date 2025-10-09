@@ -86,7 +86,8 @@
     <div class="absolute top-6 right-6">
         <a id=allModelsBtn href="category.html?category=all" 
             class="px-5 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg text-sm font-medium shadow-lg transition flex items-center space-x-2">
-            All Models</a>
+            All Models
+        </a>
     </div>
 
     <!-- Hero Content -->
@@ -388,14 +389,18 @@
         });
 
         const allModelsBtn = document.getElementById('allModelsBtn');
-        allModelsBtn?.addEventListener('click', () => {
-            window.location.href = 'category.html?category=all';
+        if (!allModelsBtn) return;
+        
+        allModelsBtn?.addEventListener('click', (e) => {
+            e.preventDefault(); // Stop default navigation
 
              // Small scale animation
             allModelsBtn.classList.add('scale-110');
+
             setTimeout(() => {
                 allModelsBtn.classList.remove('scale-110');
-            }, 200);
+                window.location.href = allModelsBtn.href;
+            }, 150);
         });
     });
 
