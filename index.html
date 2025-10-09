@@ -1,410 +1,411 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIviary — Discover AI Tools</title>
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-        .category-btn {
-            transition: all 0.3s ease;
-        }
-        .category-btn.active {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: white;
-        }
-        .model-tile {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-origin: center;
-        }
-        .model-tile:hover {
-            transform: scale(1.05);
-            z-index: 10;
-        }
-        .search-input {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .search-input:focus {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.4);
-        }
-                @keyframes pulse-glow {
-          0%, 100% {
-            opacity: 0.4;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 0.8;
-            transform: scale(1.1);
-          }
-        }
-        
-        .animate-pulse-glow {
-          animation: pulse-glow 3s ease-in-out infinite;
-        }
-        
-        .bg-gradient-radial {
-          background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
-        }
-
-        .scale-110 {
-            transform: scale(0.9);
-            transition: transform 0.2s ease-in-out;
-        }
-    </style>
-</head>
-<body class="text-white">
-
-<!-- Hero Section -->
-<section 
-    class="relative h-screen flex flex-col items-center justify-center text-center text-white bg-cover bg-center"
-    style="background-image: url('image-AI.jpg');"
->
-    <!-- Overlay -->
-    <div class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"></div>
-
-   <!-- Logo (Top-left corner) -->
-    <div class="absolute top-6 left-8 flex items-center space-x-3 z-10">
-        <div class="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg flex items-center justify-center">
-            <i data-feather="zap" class="w-4 h-4"></i>
-        </div>
-        <span class="text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-            AIviary
-        </span>
-    </div>
-
-     <!-- Top-right button -->
-    <div class="absolute top-6 right-6">
-        <a id="allModelsBtn" 
-           href="category.html?category=all"
-           class="px-5 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg text-sm font-medium shadow-lg transition flex items-center space-x-2">
-           All Models
-        </a>
-    </div>
-    <!-- Hero Content -->
-    <div class="relative z-10 max-w-2xl px-6">
-        <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
-            Discover the World's Smartest AI Tools
-        </h1>
-        <p class="text-lg md:text-xl text-gray-200 mb-8">
-            If you're new to AI or looking for new inspiration... keep scrolling!
-        </p>
-
-        <!-- Search Bar -->
-        <div class="relative w-full max-w-xl mx-auto">
-            <input 
-                type="text"
-                id="searchInput"
-                placeholder="Search AI tools... or try 'All'"
-                class="w-full px-5 py-3 rounded-full search-input text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all duration-300"
-            >
-            <i data-feather="search" class="absolute right-4 top-3 w-6 h-6 text-gray-300"></i>
-        </div>
-    </div>
-
-    <!-- Scroll Down Indicator -->
-    <div class="absolute bottom-6 text-gray-300 animate-bounce z-10">
-        <i data-feather="chevron-down" class="w-6 h-6"></i>
-    </div>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AIviary — Discover AI Tools</title>
+        <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://unpkg.com/feather-icons"></script>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+            body {
+                font-family: 'Inter', sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+            }
+            .category-btn {
+                transition: all 0.3s ease;
+            }
+            .category-btn.active {
+                background: rgba(255, 255, 255, 0.2);
+                border-color: white;
+            }
+            .model-tile {
+                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                transform-origin: center;
+            }
+            .model-tile:hover {
+                transform: scale(1.05);
+                z-index: 10;
+            }
+            .search-input {
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            .search-input:focus {
+                background: rgba(255, 255, 255, 0.15);
+                border-color: rgba(255, 255, 255, 0.4);
+            }
+                    @keyframes pulse-glow {
+              0%, 100% {
+                opacity: 0.4;
+                transform: scale(1);
+              }
+              50% {
+                opacity: 0.8;
+                transform: scale(1.1);
+              }
+            }
+            
+            .animate-pulse-glow {
+              animation: pulse-glow 3s ease-in-out infinite;
+            }
+            
+            .bg-gradient-radial {
+              background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+            }
     
-    <!-- Glow Overlay -->
-    <div class="absolute inset-0 flex items-center justify-center">
-        <div class="w-124 h-16 rounded-full bg-gradient-radial from-white/60 via-transparent to-transparent animate-pulse-glow"></div>
-        <div class="absolute bottom-0 inset-x-0 h-30 bg-gradient-to-t from-black/60 to-transparent"></div>
-    </div>
-</section>
+            .scale-110 {
+                transform: scale(0.9);
+                transition: transform 0.2s ease-in-out;
+            }
+        </style>
+    </head>
+    <body class="text-white">
     
-<!-- Main Content -->
-<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Categories -->
-    <div class="mb-8">
-        <h2 class="text-2xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-            Browse Categories
-        </h2>
-        <div id="categoryGrid" class="grid grid-cols-3 :grid-cols-2 gap-6 mb-8">
-            <!-- JS will inject category cards here -->
+    <!-- Hero Section -->
+    <section 
+        class="relative h-screen flex flex-col items-center justify-center text-center text-white bg-cover bg-center"
+        style="background-image: url('image-AI.jpg');"
+    >
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm"></div>
+    
+       <!-- Logo (Top-left corner) -->
+        <div class="absolute top-6 left-8 flex items-center space-x-3 z-10">
+            <div class="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg flex items-center justify-center">
+                <i data-feather="zap" class="w-4 h-4"></i>
+            </div>
+            <span class="text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                AIviary
+            </span>
         </div>
-    </div>
-</main>
-
-<!-- Footer -->
-<footer class="bg-black bg-opacity-20 backdrop-blur-lg border-t border-white border-opacity-10 mt-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div class="md:col-span-2">
-                <div class="flex items-center space-x-3 mb-4">
-                    <div class="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg flex items-center justify-center">
-                        <i data-feather="zap" class="w-4 h-4"></i>
+    
+         <!-- Top-right button -->
+        <div class="absolute top-6 right-6">
+            <a id="allModelsBtn" 
+               href="category.html?category=all"
+               class="px-5 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg text-sm font-medium shadow-lg transition flex items-center space-x-2">
+               All Models
+            </a>
+        </div>
+        <!-- Hero Content -->
+        <div class="relative z-10 max-w-2xl px-6">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
+                Discover the World's Smartest AI Tools
+            </h1>
+            <p class="text-lg md:text-xl text-gray-200 mb-8">
+                If you're new to AI or looking for new inspiration... keep scrolling!
+            </p>
+    
+            <!-- Search Bar -->
+            <div class="relative w-full max-w-xl mx-auto">
+                <input 
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search AI tools... or try 'All'"
+                    class="w-full px-5 py-3 rounded-full search-input text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all duration-300"
+                >
+                <i data-feather="search" class="absolute right-4 top-3 w-6 h-6 text-gray-300"></i>
+            </div>
+        </div>
+    
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-6 text-gray-300 animate-bounce z-10">
+            <i data-feather="chevron-down" class="w-6 h-6"></i>
+        </div>
+        
+        <!-- Glow Overlay -->
+        <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-124 h-16 rounded-full bg-gradient-radial from-white/60 via-transparent to-transparent animate-pulse-glow"></div>
+            <div class="absolute bottom-0 inset-x-0 h-30 bg-gradient-to-t from-black/60 to-transparent"></div>
+        </div>
+    </section>
+        
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Categories -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                Browse Categories
+            </h2>
+            <div id="categoryGrid" class="grid grid-cols-3 :grid-cols-2 gap-6 mb-8">
+                <!-- JS will inject category cards here -->
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-black bg-opacity-20 backdrop-blur-lg border-t border-white border-opacity-10 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg flex items-center justify-center">
+                            <i data-feather="zap" class="w-4 h-4"></i>
+                        </div>
+                        <span class="text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                            AIviary
+                        </span>
                     </div>
-                    <span class="text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                        AIviary
-                    </span>
+                    <p class="text-gray-300 leading-relaxed">
+                        Discover and explore the world's most innovative AI tools. From creative writing assistants to advanced analytics platforms, find the perfect AI companion for your needs.
+                    </p>
                 </div>
-                <p class="text-gray-300 leading-relaxed">
-                    Discover and explore the world's most innovative AI tools. From creative writing assistants to advanced analytics platforms, find the perfect AI companion for your needs.
+    
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Legal</h4>
+                    <div class="space-y-2">
+                        <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Disclaimer</a>
+                        <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Privacy Policy</a>
+                        <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Terms of Use</a>
+                        <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">DMCA</a>
+                    </div>
+                </div>
+    
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Connect</h4>
+                    <div class="space-y-2">
+                        <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">GitHub</a>
+                        <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Twitter</a>
+                        <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Contact</a>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="border-t border-white border-opacity-10 mt-8 pt-8 text-center">
+                <p class="text-gray-400">
+                    &copy; 2025 AIviary. All AI tools belong to their respective owners.
                 </p>
             </div>
-
-            <div>
-                <h4 class="text-lg font-semibold text-white mb-4">Legal</h4>
-                <div class="space-y-2">
-                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Disclaimer</a>
-                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Privacy Policy</a>
-                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Terms of Use</a>
-                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">DMCA</a>
-                </div>
-            </div>
-
-            <div>
-                <h4 class="text-lg font-semibold text-white mb-4">Connect</h4>
-                <div class="space-y-2">
-                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">GitHub</a>
-                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Twitter</a>
-                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Contact</a>
-                </div>
-            </div>
         </div>
-
-        <div class="border-t border-white border-opacity-10 mt-8 pt-8 text-center">
-            <p class="text-gray-400">
-                &copy; 2025 AIviary. All AI tools belong to their respective owners.
-            </p>
-        </div>
-    </div>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
-
-<script>
-   // DOM Elements
+    </footer>
     
-    const modelsGrid = document.getElementById('modelsGrid');
-    const loadingState = document.getElementById('loadingState');
-    const searchInput = document.getElementById('searchInput');
-
-    let modelsData = [];
-    let currentCategory = 'all';
-    let currentSearch = '';
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
     
-    // Unified categories array
-    const categories = [
-            { key: 'all', name: 'All', icon: 'world', colorFrom: 'from-purple-500', colorTo: 'to-pink-500', image: 'image-AI.jpg' },
-            { key: 'writing', name: 'Writing', icon: 'edit-3', colorFrom: 'from-purple-500', colorTo: 'to-pink-500', image: 'image-AI.jpg' },
-            { key: 'design', name: 'Design', icon: 'pen-tool', colorFrom: 'from-green-400', colorTo: 'to-blue-500', image: 'image-AI.jpg' },
-            { key: 'learning', name: 'Learning', icon: 'book', colorFrom: 'from-yellow-400', colorTo: 'to-orange-500', image: 'image-AI.jpg' },
-            { key: 'business', name: 'Business', icon: 'briefcase', colorFrom: 'from-indigo-400', colorTo: 'to-purple-500', image: 'image-AI.jpg' },
-            { key: 'chatbots', name: 'Chatbots', icon: 'message-circle', colorFrom: 'from-pink-400', colorTo: 'to-red-500', image: 'image-AI.jpg' },
-            { key: 'music', name: 'Music', icon: 'volume-2', colorFrom: 'from-teal-400', colorTo: 'to-blue-400', image: 'image-AI.jpg' },
-            { key: 'coding', name: 'Coding', icon: 'code', colorFrom: 'from-blue-400', colorTo: 'to-indigo-500', image: 'image-AI.jpg' },
-            { key: 'science', name: 'Science', icon: 'cpu', colorFrom: 'from-red-400', colorTo: 'to-yellow-500', image: 'image-AI.jpg' },
-            { key: 'finance', name: 'Finance', icon: 'bar-chart-2', colorFrom: 'from-green-400', colorTo: 'to-teal-500', image: 'image-AI.jpg' },
-            { key: 'speech', name: 'Speech', icon: 'smile', colorFrom: 'from-gray-400', colorTo: 'to-gray-600', image: 'image-AI.jpg' },
-            { key: 'health', name: 'Health', icon: 'health', colorFrom: 'from-gray-400', colorTo: 'to-gray-600', image: 'image-AI.jpg' }
-        ];
-
-    // Lookup function for display names
-    function getCategoryName(catKey) {
-        const key = catKey.toLowerCase();
-        const category = categories.find(c => c.key === key);
-        return category ? category.name : catKey.charAt(0).toUpperCase() + catKey.slice(1);
-    }
-
-    // Fetch models from JSON
-    async function fetchModels() {
-        try {
-            const response = await fetch('./models.json');
-            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-            modelsData = await response.json();
-            
-            setupFuse();
-            displayModels(getRandomModels(modelsData, 12)); // show 12 random models on load
-            loadingState?.classList.add('hidden');
-        } catch (err) {
-            console.error('❌ Failed to load models.json:', err);
-            if (loadingState) {
-                loadingState.innerHTML = `
-                    <p class="text-red-400 text-lg mt-6">
-                        Failed to load AI tools. Please refresh or try again later.
-                    </p>
-                `;
-            }
-        }
-    }
-    
-    // Display models
-    function displayModels(models) {
-        if (!modelsGrid) return;
-        modelsGrid.innerHTML = '';
-    
-        models.forEach(model => {
-            const tile = document.createElement('div');
-            tile.className = 'model-tile group cursor-pointer bg-black bg-opacity-20 rounded-xl overflow-hidden border border-white border-opacity-10 hover:border-opacity-30 transition-all duration-300';
-            tile.innerHTML = `
-                <div class="w-full h-32 bg-cover bg-center" style="background-image: url('${model.image}')"></div>
-                <div class="p-3">
-                    <h3 class="text-white font-semibold text-sm mb-1">${model.name}</h3>
-                    <p class="text-gray-300 text-xs line-clamp-2">${model.description.substring(0,80)}...</p>
-                    <span class="text-xs px-2 py-1 bg-purple-500 bg-opacity-20 text-purple-300 rounded-full">${getCategoryName(model.category)}</span>
-                </div>
-            `;
-            tile.addEventListener('click', () => {
-                window.location.href = `model.html?id=${encodeURIComponent(model.id)}`;
-            });
-            modelsGrid.appendChild(tile);
-        });
-    }
-
-    // Return n random models
-    function getRandomModels(models, n) {
-        const shuffled = [...models].sort(() => 0.5 - Math.random());
-        return shuffled.slice(0, n);
-    }
-
-     // ----------------------------
-     // Fuzzy search with Fuse.js
-     // ----------------------------
-     let fuse;
-     function setupFuse() {
-         fuse = new Fuse(modelsData, {
-             keys: ['name', 'description', 'category'],
-             threshold: 0.4,      // 0 = exact, 1 = very loose
-             ignoreLocation: true,
-             isCaseSensitive: false
-         });
-     }
-
-    // Capitalized display names
-    function getCategoryName(cat) {
-        const map = {};
-        categories.forEach(c => map[c.key] = c.name);
-        return map[cat] || cat;
-    }
-
-    async function searchModels(query) {
-        const resultsGrid = document.getElementById('resultsGrid');
+    <script>
+       // DOM Elements
+        
+        const modelsGrid = document.getElementById('modelsGrid');
         const loadingState = document.getElementById('loadingState');
-        loadingState.classList.remove('hidden');
-        resultsGrid.innerHTML = '';
+        const searchInput = document.getElementById('searchInput');
     
-        try {
-            const response = await fetch('./models.json');
-            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-            const models = await response.json();
+        let modelsData = [];
+        let currentCategory = 'all';
+        let currentSearch = '';
+        
+        // Unified categories array
+        const categories = [
+                { key: 'all', name: 'All', icon: 'world', colorFrom: 'from-purple-500', colorTo: 'to-pink-500', image: 'image-AI.jpg' },
+                { key: 'writing', name: 'Writing', icon: 'edit-3', colorFrom: 'from-purple-500', colorTo: 'to-pink-500', image: 'image-AI.jpg' },
+                { key: 'design', name: 'Design', icon: 'pen-tool', colorFrom: 'from-green-400', colorTo: 'to-blue-500', image: 'image-AI.jpg' },
+                { key: 'learning', name: 'Learning', icon: 'book', colorFrom: 'from-yellow-400', colorTo: 'to-orange-500', image: 'image-AI.jpg' },
+                { key: 'business', name: 'Business', icon: 'briefcase', colorFrom: 'from-indigo-400', colorTo: 'to-purple-500', image: 'image-AI.jpg' },
+                { key: 'chatbots', name: 'Chatbots', icon: 'message-circle', colorFrom: 'from-pink-400', colorTo: 'to-red-500', image: 'image-AI.jpg' },
+                { key: 'music', name: 'Music', icon: 'volume-2', colorFrom: 'from-teal-400', colorTo: 'to-blue-400', image: 'image-AI.jpg' },
+                { key: 'coding', name: 'Coding', icon: 'code', colorFrom: 'from-blue-400', colorTo: 'to-indigo-500', image: 'image-AI.jpg' },
+                { key: 'science', name: 'Science', icon: 'cpu', colorFrom: 'from-red-400', colorTo: 'to-yellow-500', image: 'image-AI.jpg' },
+                { key: 'finance', name: 'Finance', icon: 'bar-chart-2', colorFrom: 'from-green-400', colorTo: 'to-teal-500', image: 'image-AI.jpg' },
+                { key: 'speech', name: 'Speech', icon: 'smile', colorFrom: 'from-gray-400', colorTo: 'to-gray-600', image: 'image-AI.jpg' },
+                { key: 'health', name: 'Health', icon: 'health', colorFrom: 'from-gray-400', colorTo: 'to-gray-600', image: 'image-AI.jpg' }
+            ];
     
-            const keywords = query.toLowerCase().split(/\s+/).filter(Boolean);
-    
-            // Compute a score for each model
-            const scored = models.map(model => {
-                const haystack = (
-                    (model.name || '') + ' ' +
-                    (model.description || '') + ' ' +
-                    (model.category || '') + ' ' +
-                    (model.tags ? model.tags.join(' ') : '')
-                ).toLowerCase();
-    
-                let score = 0;
-                keywords.forEach(word => {
-                    if (haystack.includes(word)) score++;
-                });
-                // Bonus if matches category name partially
-                if (model.category && query.toLowerCase().includes(model.category.toLowerCase()))
-                    score += 2;
-    
-                return { model, score };
-            });
-
-            // Filter and sort
-            const filtered = scored
-                .filter(item => item.score > 0)
-                .sort((a, b) => b.score - a.score)
-                .map(item => item.model);
-    
-            loadingState.classList.add('hidden');
-    
-            if (filtered.length === 0) {
-                resultsGrid.innerHTML = `<p class="text-gray-400 text-lg mt-6">No results found for "${query}"</p>`;
-                return;
-            }
-    
-            displayModels(filtered); // use your existing grid display function
-        } catch (err) {
-            console.error('Search failed:', err);
-            loadingState.innerHTML = '<p class="text-red-400 text-lg mt-6">Error loading search results.</p>';
+        // Lookup function for display names
+        function getCategoryName(catKey) {
+            const key = catKey.toLowerCase();
+            const category = categories.find(c => c.key === key);
+            return category ? category.name : catKey.charAt(0).toUpperCase() + catKey.slice(1);
         }
-    }
     
-    // Render homepage categories grid
-    function renderCategories() {
-        if (!categoryGrid) return;
-        categoryGrid.innerHTML = '';
-    
-        categories.forEach(cat => {
-            const card = document.createElement('div');
-            card.className = `cursor-pointer rounded-xl p-4 sm:p-6 flex flex-col items-center justify-center hover:scale-105 transform transition-all duration-300 shadow-lg`;
-            card.innerHTML = `
-                <div class="w-full h-32 bg-cover bg-center relative overflow-hidden ${cat.colorFrom} ${cat.colorTo}" style="background-image: url('${cat.image}');">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center p-4">   
-                        <i data-feather="${cat.icon}" class="w-8 h-8 mb-2"></i>
-                        <span class="text-white font-semibold text-center text-sm sm:text-base md:text-sm lg:text-base break-words truncate">${cat.name}</span>
-                    </div>
-                </div>
-            `;
-            card.addEventListener('click', () => {
-                window.location.href = `category.html?category=${encodeURIComponent(cat.key)}`;
-            });
-            categoryGrid.appendChild(card);
-        });
-    
-        feather.replace();
-    }
-    
-    // Initialize
-    document.addEventListener('DOMContentLoaded', () => {
-        renderCategories();
-        fetchModels();
-    
-        searchInput?.addEventListener('input', e => {
-            currentSearch = e.target.value;
-            filterModels();
-        });
-    
-        searchInput.addEventListener('keydown', e => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                const query = searchInput.value.trim();
-                if (query) {
-                    // redirect to search results page with query as a parameter
-                    window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+        // Fetch models from JSON
+        async function fetchModels() {
+            try {
+                const response = await fetch('./models.json');
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                modelsData = await response.json();
+                
+                setupFuse();
+                displayModels(getRandomModels(modelsData, 12)); // show 12 random models on load
+                loadingState?.classList.add('hidden');
+            } catch (err) {
+                console.error('❌ Failed to load models.json:', err);
+                if (loadingState) {
+                    loadingState.innerHTML = `
+                        <p class="text-red-400 text-lg mt-6">
+                            Failed to load AI tools. Please refresh or try again later.
+                        </p>
+                    `;
                 }
             }
-        });
-
-        const allModelsBtn = document.getElementById('allModelsBtn');
-        if (!allModelsBtn) return;
+        }
         
-        allModelsBtn?.addEventListener('click', (e) => {
-            e.preventDefault(); // Stop default navigation
-
-             // Small scale animation
-            allModelsBtn.classList.add('scale-110');
-
-            setTimeout(() => {
-                allModelsBtn.classList.remove('scale-110');
-                window.location.href = allModelsBtn.href;
-            }, 150);
+        // Display models
+        function displayModels(models) {
+            if (!modelsGrid) return;
+            modelsGrid.innerHTML = '';
+        
+            models.forEach(model => {
+                const tile = document.createElement('div');
+                tile.className = 'model-tile group cursor-pointer bg-black bg-opacity-20 rounded-xl overflow-hidden border border-white border-opacity-10 hover:border-opacity-30 transition-all duration-300';
+                tile.innerHTML = `
+                    <div class="w-full h-32 bg-cover bg-center" style="background-image: url('${model.image}')"></div>
+                    <div class="p-3">
+                        <h3 class="text-white font-semibold text-sm mb-1">${model.name}</h3>
+                        <p class="text-gray-300 text-xs line-clamp-2">${model.description.substring(0,80)}...</p>
+                        <span class="text-xs px-2 py-1 bg-purple-500 bg-opacity-20 text-purple-300 rounded-full">${getCategoryName(model.category)}</span>
+                    </div>
+                `;
+                tile.addEventListener('click', () => {
+                    window.location.href = `model.html?id=${encodeURIComponent(model.id)}`;
+                });
+                modelsGrid.appendChild(tile);
+            });
+        }
+    
+        // Return n random models
+        function getRandomModels(models, n) {
+            const shuffled = [...models].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, n);
+        }
+    
+         // ----------------------------
+         // Fuzzy search with Fuse.js
+         // ----------------------------
+         let fuse;
+         function setupFuse() {
+             fuse = new Fuse(modelsData, {
+                 keys: ['name', 'description', 'category'],
+                 threshold: 0.4,      // 0 = exact, 1 = very loose
+                 ignoreLocation: true,
+                 isCaseSensitive: false
+             });
+         }
+    
+        // Capitalized display names
+        function getCategoryName(cat) {
+            const map = {};
+            categories.forEach(c => map[c.key] = c.name);
+            return map[cat] || cat;
+        }
+    
+        async function searchModels(query) {
+            const resultsGrid = document.getElementById('resultsGrid');
+            const loadingState = document.getElementById('loadingState');
+            loadingState.classList.remove('hidden');
+            resultsGrid.innerHTML = '';
+        
+            try {
+                const response = await fetch('./models.json');
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                const models = await response.json();
+        
+                const keywords = query.toLowerCase().split(/\s+/).filter(Boolean);
+        
+                // Compute a score for each model
+                const scored = models.map(model => {
+                    const haystack = (
+                        (model.name || '') + ' ' +
+                        (model.description || '') + ' ' +
+                        (model.category || '') + ' ' +
+                        (model.tags ? model.tags.join(' ') : '')
+                    ).toLowerCase();
+        
+                    let score = 0;
+                    keywords.forEach(word => {
+                        if (haystack.includes(word)) score++;
+                    });
+                    // Bonus if matches category name partially
+                    if (model.category && query.toLowerCase().includes(model.category.toLowerCase()))
+                        score += 2;
+        
+                    return { model, score };
+                });
+    
+                // Filter and sort
+                const filtered = scored
+                    .filter(item => item.score > 0)
+                    .sort((a, b) => b.score - a.score)
+                    .map(item => item.model);
+        
+                loadingState.classList.add('hidden');
+        
+                if (filtered.length === 0) {
+                    resultsGrid.innerHTML = `<p class="text-gray-400 text-lg mt-6">No results found for "${query}"</p>`;
+                    return;
+                }
+        
+                displayModels(filtered); // use your existing grid display function
+            } catch (err) {
+                console.error('Search failed:', err);
+                loadingState.innerHTML = '<p class="text-red-400 text-lg mt-6">Error loading search results.</p>';
+            }
+        }
+        
+        // Render homepage categories grid
+        function renderCategories() {
+            if (!categoryGrid) return;
+            categoryGrid.innerHTML = '';
+        
+            categories.forEach(cat => {
+                const card = document.createElement('div');
+                card.className = `cursor-pointer rounded-xl p-4 sm:p-6 flex flex-col items-center justify-center hover:scale-105 transform transition-all duration-300 shadow-lg`;
+                card.innerHTML = `
+                    <div class="w-full h-32 bg-cover bg-center relative overflow-hidden ${cat.colorFrom} ${cat.colorTo}" style="background-image: url('${cat.image}');">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center p-4">   
+                            <i data-feather="${cat.icon}" class="w-8 h-8 mb-2"></i>
+                            <span class="text-white font-semibold text-center text-sm sm:text-base md:text-sm lg:text-base break-words truncate">${cat.name}</span>
+                        </div>
+                    </div>
+                `;
+                card.addEventListener('click', () => {
+                    window.location.href = `category.html?category=${encodeURIComponent(cat.key)}`;
+                });
+                categoryGrid.appendChild(card);
+            });
+        
+            feather.replace();
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCategories();
+            fetchModels();
+        
+            searchInput?.addEventListener('input', e => {
+                currentSearch = e.target.value;
+                filterModels();
+            });
+        
+            searchInput.addEventListener('keydown', e => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const query = searchInput.value.trim();
+                    if (query) {
+                        // redirect to search results page with query as a parameter
+                        window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+                    }
+                }
+            });
+    
+            const allModelsBtn = document.getElementById('allModelsBtn');
+            if (!allModelsBtn) return;
+            
+            allModelsBtn?.addEventListener('click', (e) => {
+                e.preventDefault(); // Stop default navigation
+    
+                 // Small scale animation
+                allModelsBtn.classList.add('scale-110');
+    
+                setTimeout(() => {
+                    allModelsBtn.classList.remove('scale-110');
+                    window.location.href = allModelsBtn.href;
+                }, 150);
+            });
         });
-    });
-
-</script>
-
+    
+    </script>
+    <script src="main.js"></script>
+        
 </body>
 </html>
