@@ -16,11 +16,17 @@
 </style>
 </head>
 <body class="text-white">
-    <!-- Header -->
-    <header class="p-6 flex justify-between items-center border-b border-white border-opacity-10">
-        <h1 class="text-2xl font-bold">🔍 AIviary Search</h1>
-        <a href="index.html" class="text-sm text-gray-300 hover:text-white transition">Back to Home</a>
-    </header>
+    <!-- Logo (Top-left corner) -->
+    <div class="absolute top-6 left-8 flex items-center space-x-3 z-10">
+        <a href="index.html" class="flex items-center space-x-3 group">
+            <div class="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg flex items-center justify-center">
+                <i data-feather="zap" class="w-4 h-4"></i>
+            </div>
+            <span class="text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                AIviary
+            </span>
+        </a>
+    </div>
 
     <!-- Search Results Section -->
     <main class="flex-1 container mx-auto px-4 py-10">
