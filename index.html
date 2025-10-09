@@ -364,11 +364,14 @@
             filterModels();
         });
     
-        searchInput?.addEventListener('keydown', e => {
+        searchInput.addEventListener('keydown', e => {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 const query = searchInput.value.trim();
-                if (query) window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+                if (query) {
+                    // redirect to search results page with query as a parameter
+                    window.location.href = `search.html?q=${encodeURIComponent(query)}`;
+                }
             }
         });
     });
