@@ -174,6 +174,7 @@ async function loadCategoryModels() {
 
         currentModels = getRandomModels(filteredModels, 12); // store selected models
         displayModels(currentModels);
+        modelsGrid.className = 'grid gap-6 sm:grid-cols-2 lg:grid-cols-3';
         loadingState.classList.add('hidden');
     } catch (err) {
         console.error('Failed to load models:', err);
@@ -191,21 +192,22 @@ function getRandomModels(models, n) {
 function displayModels(models) {
     modelsGrid.innerHTML = '';
     modelsGrid.className = 'grid gap-6 sm:grid-cols-2 lg:grid-cols-3';
+    
     models.forEach(model => {
-        const tile = document.createElement('div');
-        tile.className = 'model-tile group cursor-pointer bg-black bg-opacity-20 rounded-xl overflow-hidden border border-white border-opacity-10 hover:border-opacity-30 transition-all duration-300';
-        tile.innerHTML = `
+        const card = document.createElement('div');
+        card.className = 'bg-black bg-opacity-30 rounded-xl overflow-hidden hover:scale-105 transition transform duration-300 border border-white border-opacity-10';
+        card.innerHTML = `
             <div class="w-full h-40 bg-cover bg-center" style="background-image: url('${model.image}')"></div>
             <div class="p-4">
-                <h3 class="text font-semibold text-sm mb-2">${model.name}</h3>
+                <h3 class="text-lg font-semibold mb-2">${model.name}</h3>
                 <p class="text-sm text-gray-300 mb-3 line-clamp-2">${model.description}</p>
-                <span class="text-xs px-2 py-1 bg-purple-500 bg-opacity-20 text-purple-300 rounded-full">${getCategoryName(model.category)}</span>
+                <div class="flex justify-between items-center text-xs text-gray-400">
+                    <span>${getCategoryName(model.category)}</span>
+                    <a href="model.html?id=${encodeURIComponent(model.id)}" class="text-purple-400 hover:text-purple-300">View →</a>
+                </div>
             </div>
         `;
-        tile.addEventListener('click', () => {
-            window.location.href = `model.html?id=${encodeURIComponent(model.id)}`;
-        });
-        modelsGrid.appendChild(tile);
+        modelsGrid.appendChild(card);
     });
 }
 // Sort by button functionality
