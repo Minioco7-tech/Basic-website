@@ -29,31 +29,41 @@
     </nav>
 
     <!-- Header Section -->
-    <header>
-        <div class="flex justify-between items-center mb-6">
-            <h2 id="categoryTitle" class="text-2xl font-bold"></h2>
-            
-                <!-- Sort By Dropdown -->
-                <div class="relative">
-                  <select id="sortBy" 
-                    class="appearance-none px-3 py-2 pr-8 bg-black bg-opacity-30 border border-white border-opacity-10 text-white text-sm rounded-lg 
-                           focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-pointer">
-                    <option value="relevance">Relevance</option>
-                    <option value="az">A → Z</option>
-                    <option value="za">Z → A</option>
-                  </select>
-                  <!-- Custom white dropdown arrow -->
-                  <svg xmlns="http://www.w3.org/2000/svg" 
-                       class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white pointer-events-none" 
-                       fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                  </svg>
-            <!-- Randomise Button -->
-            <button id="randomiseBtn" class="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white text-sm rounded-lg transition flex items-center space-x-2">
-                <i data-feather="shuffle" class="w-4 h-4"></i>
-                <span>Randomise</span>
-            </button>
+    <header class="w-full bg-transparent py-6">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-3 items-center gap-4">
+        
+        <!-- Left: Title -->
+        <h2 id="categoryTitle" class="text-2xl font-bold text-left">Search Results</h2>
+    
+        <!-- Center: Sort By -->
+        <div class="flex justify-center">
+          <div class="relative inline-block">
+            <select id="sortBy"
+              class="appearance-none px-3 py-2 pr-8 bg-black bg-opacity-30 border border-white border-opacity-10 text-white text-sm rounded-lg 
+                     focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-pointer">
+              <option value="relevance">Relevance</option>
+              <option value="az">A → Z</option>
+              <option value="za">Z → A</option>
+            </select>
+    
+            <!-- Custom white dropdown arrow -->
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="absolute right-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white pointer-events-none"
+                 fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
         </div>
+    
+        <!-- Right: Randomise Button -->
+        <div class="flex justify-end">
+          <button id="randomiseBtn"
+            class="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white text-sm rounded-lg transition flex items-center space-x-2">
+            <i data-feather="shuffle" class="w-4 h-4"></i>
+            <span>Randomise</span>
+          </button>
+        </div>
+      </div>
     </header>
 
     <!-- Search Results section -->
@@ -65,8 +75,49 @@
     </main>
 
     <!-- Footer -->
-    <footer class="text-center text-sm text-gray-500 py-4 border-t border-white border-opacity-10">
-        © 2025 AIviary. All rights reserved.
+    <footer class="bg-black bg-opacity-20 backdrop-blur-lg border-t border-white border-opacity-10 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="md:col-span-2">
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg flex items-center justify-center">
+                        <i data-feather="zap" class="w-4 h-4"></i>
+                    </div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                        AIviary
+                    </span>
+                </div>
+                <p class="text-gray-300 leading-relaxed">
+                    Discover and explore the world's most innovative AI tools. From creative writing assistants to advanced analytics platforms, find the perfect AI companion for your needs.
+                </p>
+            </div>
+    
+            <div>
+                <h4 class="text-lg font-semibold text-white mb-4">Legal</h4>
+                <div class="space-y-2">
+                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Disclaimer</a>
+                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Privacy Policy</a>
+                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Terms of Use</a>
+                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">DMCA</a>
+                </div>
+            </div>
+    
+            <div>
+                <h4 class="text-lg font-semibold text-white mb-4">Connect</h4>
+                <div class="space-y-2">
+                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">GitHub</a>
+                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Twitter</a>
+                    <a href="#" class="block text-gray-300 hover:text-white transition-colors duration-200">Contact</a>
+                </div>
+            </div>
+        </div>
+    
+        <div class="border-t border-white border-opacity-10 mt-8 pt-8 text-center">
+            <p class="text-gray-400">
+                &copy; 2025 AIviary. All AI tools belong to their respective owners.
+            </p>
+        </div>
+    </div>
     </footer>
 
     <script>
