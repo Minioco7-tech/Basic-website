@@ -189,6 +189,7 @@ function getRandomModels(models, n) {
 // Display models in the grid
 function displayModels(models) {
     modelsGrid.innerHTML = '';
+    modelsGrid.className = 'grid gap-6 sm:grid-cols-2 lg:grid-cols-3';
     models.forEach(model => {
         const tile = document.createElement('div');
         tile.className = 'model-tile group cursor-pointer bg-black bg-opacity-20 rounded-xl overflow-hidden border border-white border-opacity-10 hover:border-opacity-30 transition-all duration-300';
