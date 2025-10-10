@@ -124,6 +124,7 @@ const modelsGrid = document.getElementById('modelsGrid');
 const loadingState = document.getElementById('loadingState');
 const categoryTitle = document.getElementById('categoryTitle');
 const randomiseBtn = document.getElementById('randomiseBtn');
+const sortBySelect = document.getElementById('sortBy');
 
 // Global array to store models currently displayed
 let currentModels = [];
@@ -207,6 +208,32 @@ function displayModels(models) {
         modelsGrid.appendChild(tile);
     });
 }
+// Sort by button functionality
+function sortModels(models, criteria) {
+        const sorted = [...models]; // copy array
+        switch(criteria) {
+            case 'az':
+                sorted.sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            case 'za':
+                sorted.sort((a, b) => b.name.localeCompare(a.name));
+                break;
+            case 'relevance':
+            default:
+                // Already sorted by relevance/fuzzy score
+                break;
+        }
+        return sorted;
+    }
+    
+    // Listen for changes in dropdown
+    sortBySelect.addEventListener('change', () => {
+        if (!currentModels.length) return;
+    
+        const sortedModels = sortModels(currentModels, sortBySelect.value);
+        displayModels(sortedModels);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 
 // Fisher–Yates shuffle (mobile-safe)
 function shuffleArray(array) {
